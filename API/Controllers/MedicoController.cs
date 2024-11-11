@@ -61,5 +61,12 @@ namespace API.Controllers
             var consultas = await _medicoService.ObterConsultasPorMedico(medicoId);
             return Ok(consultas);
         }
+
+       // [HttpGet("todos")]  (IMPLEMENTAR)
+        //public async Task<IActionResult> GetAllMedicos()
+        //{
+         //   var medicos = await _medicoService.GetAllMedicosAsync();
+        //    return Ok(medicos);
+       // }
     }
 }
