@@ -33,9 +33,17 @@ namespace API.Controllers
         [HttpPost("registrar")]
         public async Task<IActionResult> RegistrarCliente(ClienteDTO clienteDTO)
         {
-            var result = await _clienteService.RegistrarCliente(clienteDTO);
-            if (result > 0)
-                return Ok("Cliente registrado com sucesso");
+            try
+            {
+                var result = await _clienteService.RegistrarCliente(clienteDTO);
+                if (result > 0)
+                    return Ok("Cliente registrado com sucesso");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
             return BadRequest("Erro ao registrar cliente");
         }
 

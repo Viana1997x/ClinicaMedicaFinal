@@ -21,7 +21,15 @@ namespace Core.Services
         public async Task<int> RegistrarCliente(ClienteDTO clienteDTO)
         {
             var cliente = _mapper.Map<Cliente>(clienteDTO);
-            return await _clienteRepository.AddAsync(cliente);
+            try
+            {
+                return await _clienteRepository.AddAsync(cliente);
+            }
+            catch (Exception ex)
+            {
+                // Retorna mensagem de erro se CPF já existir
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task<ClienteDTO> LoginCliente(string cpf, string senha)
