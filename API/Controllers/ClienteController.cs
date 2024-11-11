@@ -1,0 +1,83 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Core.DTOs;
+using Core.Services;
+using Core.Interfaces;
+using System.Threading.Tasks;
+
+namespace API.Controllers
+{
+    /// <summary>
+    /// Controlador responsável pelas operações relacionadas ao cliente.
+    /// </summary>
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ClienteController : ControllerBase
+    {
+        private readonly IClienteService _clienteService;
+
+        /// <summary>
+        /// Construtor do ClienteController.
+        /// </summary>
+        /// <param name="clienteService">Serviço para manipulação dos dados de cliente.</param>
+        public ClienteController(IClienteService clienteService)
+        {
+            _clienteService = clienteService;
+        }
+
+        /// <summary>
+        /// Registra um novo cliente.
+        /// </summary>
+        /// <param name="clienteDTO">Dados do cliente a ser registrado.</param>
+        /// <returns>Confirmação de sucesso ou erro ao registrar o cliente.</returns>
+        [HttpPost("registrar")]
+        public async Task<IActionResult> RegistrarCliente(ClienteDTO clienteDTO)
+        {
+            var result = await _clienteService.RegistrarCliente(clienteDTO);
+            if (result > 0)
+                return Ok("Cliente registrado com sucesso");
+            return BadRequest("Erro ao registrar cliente");
+        }
+
+        /// <summary>
+        /// Realiza o login de um cliente.
+        /// </summary>
+        /// <param name="request">Requisição contendo CPF e senha do cliente.</param>
+        /// <returns>Dados do cliente caso o login seja bem-sucedido, ou erro de autenticação.</returns>
+        [HttpPost("login")]
+        public async Task<IActionResult> LoginCliente([FromBody] LoginRequest request)
+        {
+            var cliente = await _clienteService.LoginCliente(request.CPF, request.Senha);
+            if (cliente != null)
+                return Ok(cliente);
+            return Unauthorized("CPF ou Senha incorretos");
+        }
+
+        /// <summary>
+        /// Obtém as consultas de um cliente específico.
+        /// </summary>
+        /// <param name="clienteId">ID do cliente.</param>
+        /// <returns>Lista de consultas do cliente.</returns>
+        [HttpGet("{clienteId}/consultas")]
+        public async Task<IActionResult> ObterConsultas(int clienteId)
+        {
+            var consultas = await _clienteService.ObterConsultasPorCliente(clienteId);
+            return Ok(consultas);
+        }
+    }
+
+    /// <summary>
+    /// Classe que representa a requisição de login de um cliente.
+    /// </summary>
+    public class LoginRequest
+    {
+        /// <summary>
+        /// CPF do cliente.
+        /// </summary>
+        public string CPF { get; set; }
+
+        /// <summary>
+        /// Senha do cliente.
+        /// </summary>
+        public string Senha { get; set; }
+    }
+}
