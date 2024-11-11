@@ -36,6 +36,11 @@ namespace Core.Repositories
             string sql = "SELECT * FROM Consultas WHERE MedicoId = @MedicoId";
             return await _dbConnection.QueryAsync<Consulta>(sql, new { MedicoId = medicoId });
         }
+        public async Task<IEnumerable<Medico>> GetAllAsync()
+        {
+            var sql = @"SELECT * FROM Medicos";
+            return await _dbConnection.QueryAsync<Medico>(sql);
+        }
     }
 
 }

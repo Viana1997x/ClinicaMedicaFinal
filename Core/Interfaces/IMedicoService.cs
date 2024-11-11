@@ -12,6 +12,9 @@ namespace Core.Interfaces
         Task<int> RegistrarMedico(MedicoDTO medicoDTO);
         Task<MedicoDTO> LoginMedico(string cpf, string senha);
         Task<IEnumerable<ConsultaDTO>> ObterConsultasPorMedico(int medicoId);
+
+        Task<IEnumerable<MedicoDTO>> GetAllMedicos();
+
     }
 
 }

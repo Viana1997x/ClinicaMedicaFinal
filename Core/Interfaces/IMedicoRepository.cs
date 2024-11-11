@@ -12,6 +12,7 @@ namespace Core.Interfaces
         Task<int> RegistrarMedico(Medico medico);
         Task<Medico> LoginMedico(string cpf, string senha);
         Task<IEnumerable<Consulta>> ObterConsultasPorMedico(int medicoId);
+        Task<IEnumerable<Medico>> GetAllAsync();
     }
 
 }

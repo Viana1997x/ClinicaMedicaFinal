@@ -13,6 +13,9 @@ namespace Core.Interfaces
         Task<int> DesmarcarConsulta(int consultaId);
         Task<IEnumerable<Consulta>> ObterConsultasPorCliente(int clienteId);
         Task<IEnumerable<Consulta>> ObterConsultasPorMedico(int medicoId);
+
+        Task<int> AddAsync(Consulta consulta);
+        Task<IEnumerable<Consulta>> GetAllAsync();
     }
 
 }

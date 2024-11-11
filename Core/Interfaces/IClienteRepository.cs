@@ -1,17 +1,18 @@
 ﻿using Core.Entities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Core.Interfaces
 {
     public interface IClienteRepository
     {
-        Task<int> RegistrarCliente(Cliente cliente);
-        Task<Cliente> LoginCliente(string cpf, string senha);
-        Task<IEnumerable<Consulta>> ObterConsultasPorCliente(int clienteId);
-    }
+        Task<int> AddAsync(Cliente cliente);
+        Task<Cliente> GetByCpfAndSenhaAsync(string cpf, string senha);
+        Task<IEnumerable<Consulta>> GetConsultasByClienteAsync(int clienteId);
 
+        // Adiciona o método para buscar todos os clientes
+        Task<IEnumerable<Cliente>> GetAllAsync();
+
+       
+    }
 }

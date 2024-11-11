@@ -31,6 +31,11 @@ namespace Core.Services
         {
             return await _consultaRepository.DesmarcarConsulta(consultaId);
         }
+        public async Task<IEnumerable<ConsultaDTO>> GetAllConsultas()
+        {
+            var consultas = await _consultaRepository.GetAllAsync();
+            return _mapper.Map<IEnumerable<ConsultaDTO>>(consultas);
+        }
     }
 
 }

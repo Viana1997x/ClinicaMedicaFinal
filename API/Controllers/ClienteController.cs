@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Core.DTOs;
+
 using Core.Services;
 using Core.Interfaces;
 using System.Threading.Tasks;
@@ -63,7 +64,24 @@ namespace API.Controllers
             var consultas = await _clienteService.ObterConsultasPorCliente(clienteId);
             return Ok(consultas);
         }
+
+        /// <summary>
+        /// Obtém todos os clientes do sistema.
+        /// </summary>
+        /// <returns>Lista de todos os clientes.</returns>
+        [HttpGet("all")]
+        public async Task<IActionResult> GetAllClientes()
+        {
+            var clientes = await _clienteService.GetAllClientes();
+            return Ok(clientes);
+        }
+
+
+   
+
     }
+
+
 
     /// <summary>
     /// Classe que representa a requisição de login de um cliente.

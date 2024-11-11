@@ -1,11 +1,8 @@
 ﻿using Core.Entities;
 using Core.Interfaces;
 using Dapper;
-using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Core.Repositories
@@ -19,23 +16,31 @@ namespace Core.Repositories
             _dbConnection = dbConnection;
         }
 
-        public async Task<int> RegistrarCliente(Cliente cliente)
+        public async Task<int> AddAsync(Cliente cliente)
         {
-            string sql = "INSERT INTO Clientes (Nome, CPF, Endereco, DataNascimento, Telefone, Senha) VALUES (@Nome, @CPF, @Endereco, @DataNascimento, @Telefone, @Senha)";
+            var sql = @"INSERT INTO Clientes (Nome, CPF, Endereco, DataNascimento, Telefone, Senha)
+                        VALUES (@Nome, @CPF, @Endereco, @DataNascimento, @Telefone, @Senha)";
             return await _dbConnection.ExecuteAsync(sql, cliente);
         }
 
-        public async Task<Cliente> LoginCliente(string cpf, string senha)
+        public async Task<Cliente> GetByCpfAndSenhaAsync(string cpf, string senha)
         {
-            string sql = "SELECT * FROM Clientes WHERE CPF = @CPF AND Senha = @Senha";
+            var sql = @"SELECT * FROM Clientes WHERE CPF = @CPF AND Senha = @Senha";
             return await _dbConnection.QueryFirstOrDefaultAsync<Cliente>(sql, new { CPF = cpf, Senha = senha });
         }
 
-        public async Task<IEnumerable<Consulta>> ObterConsultasPorCliente(int clienteId)
+        public async Task<IEnumerable<Consulta>> GetConsultasByClienteAsync(int clienteId)
         {
-            string sql = "SELECT * FROM Consultas WHERE ClienteId = @ClienteId";
+            var sql = @"SELECT * FROM Consultas WHERE ClienteId = @ClienteId";
             return await _dbConnection.QueryAsync<Consulta>(sql, new { ClienteId = clienteId });
         }
-    }
 
+        // Implementa o método GetAllAsync
+        public async Task<IEnumerable<Cliente>> GetAllAsync()
+        {
+            var sql = @"SELECT * FROM Clientes";
+            return await _dbConnection.QueryAsync<Cliente>(sql);
+        }
+       
+    }
 }

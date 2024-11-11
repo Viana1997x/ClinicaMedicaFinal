@@ -11,6 +11,11 @@ namespace Core.Interfaces
     {
         Task<int> MarcarConsulta(ConsultaDTO consultaDTO);
         Task<int> DesmarcarConsulta(int consultaId);
+
+        Task<IEnumerable<ConsultaDTO>> GetAllConsultas();
+
+
+
     }
 
 }

@@ -12,6 +12,10 @@ namespace Core.Interfaces
         Task<int> RegistrarCliente(ClienteDTO clienteDTO);
         Task<ClienteDTO> LoginCliente(string cpf, string senha);
         Task<IEnumerable<ConsultaDTO>> ObterConsultasPorCliente(int clienteId);
+
+        Task<IEnumerable<ClienteDTO>> GetAllClientes();
+
+        
     }
 
 }

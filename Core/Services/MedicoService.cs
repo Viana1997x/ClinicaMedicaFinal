@@ -38,6 +38,11 @@ namespace Core.Services
             var consultas = await _medicoRepository.ObterConsultasPorMedico(medicoId);
             return _mapper.Map<IEnumerable<ConsultaDTO>>(consultas);
         }
+        public async Task<IEnumerable<MedicoDTO>> GetAllMedicos()
+        {
+            var medicos = await _medicoRepository.GetAllAsync();
+            return _mapper.Map<IEnumerable<MedicoDTO>>(medicos);
+        }
     }
 
 }
